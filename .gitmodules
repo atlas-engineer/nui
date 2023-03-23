@@ -1,0 +1,12 @@
+[submodule "_build/serapeum"]
+	path = _build/serapeum
+	url = https://github.com/ruricolist/serapeum
+	shallow = true
+[submodule "_build/plump"]
+	path = _build/plump
+	url = https://github.com/Shinmera/plump
+	shallow = true
+[submodule "_build/spinneret"]
+	path = _build/spinneret
+	url = https://github.com/ruricolist/spinneret/
+	shallow = true

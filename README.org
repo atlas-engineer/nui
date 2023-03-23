@@ -1,0 +1,37 @@
+#+TITLE:NUI
+
+NUI is a set of Spinneret tags useful in documentation, blog posts, and other text-centric HTML interfaces. It originates from Nyxt, where it's used in the manual and help system.
+
+The tags that NUI provides are:
+- Text/structure tags:
+  - :nsection :: section, its heading with a link to itself, and a linkable ID.
+  - :ntoc :: auto-generated Table of Contents for the provided HTML.
+- Lisp-specific tags:
+  - :ncode :: Lisp (or non-Lisp) code listing, enriched with symbol references and customizable actions.
+  - :nxref :: reference to a symbol in a configurable documentation source.
+- Interactive tags:
+  - :nbutton :: a button invoking the action you provide.
+  - :nselect :: ~<select>~ tag with Lisp actions bound to it.
+  - :ninput :: input area tracking every modification and focus.
+    
+* Getting started
+Clone the Git repository:
+#+begin_src sh
+  git clone --recursive https://github.com/atlas-engineer/nui ~/common-lisp/
+#+end_src
+
+And then load ~:nui~ in the REPL:
+#+begin_src lisp
+  (asdf:load-system :nui)
+  ;; or, if you use Quicklisp
+  (ql:quickload :nui)
+#+end_src
+
+* Tag helpers
+
+NUI exposes a set of methods that define how to process tag arguments and bodies. One has to specialize these methods before using NUI.
+
+* History
+
+NFiles was originally developed for user file management in [[https://nyxt.atlas.engineer][Nyxt]], so the "N"
+may stand for it, or "New", or whatever poetic meaning you may find behind it!
