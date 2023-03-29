@@ -68,7 +68,7 @@ Additional keyword arguments are allowed as NUI N-args."))
 Should return a string suitable for HTML onchange attribute.
 Additional keyword arguments are allowed as NUI N-args."))
 
-(defgeneric nxref-doc (body &rest n-args &key n-package &allow-other-keys)
+(defgeneric nxref-doc (body &rest n-args &key package &allow-other-keys)
   (:method ((body symbol) &rest n-args &key &allow-other-keys)
     (declare (ignore n-args))
     (cond
@@ -93,17 +93,18 @@ documentation.
 
 Additional keyword arguments are allowed as NUI N-args."))
 
-(defgeneric nxref-link (body &rest n-args &key n-package &allow-other-keys)
-  (:method ((body t) &rest n-args &key (n-package *package*) &allow-other-keys)
+(defgeneric nxref-link (body &rest n-args &key package &allow-other-keys)
+  (:method ((body t) &rest n-args &key &allow-other-keys)
+    (declare (ignore body n-args))
     "")
   (:documentation "Function to specify href link for :nxref.
 Additional keyword arguments are allowed as NUI N-args.
 Default method returns an empty string."))
 
 (defgeneric nxref-display (body &rest n-args &key package &allow-other-keys)
-  (:method ((body t) &rest n-args &key (n-package *package*) &allow-other-keys)
+  (:method ((body t) &rest n-args &key (package *package*) &allow-other-keys)
     (declare (ignore n-args))
-    (nprint body n-package))
+    (nprint body package))
   (:documentation "Function to specify display for :nxref.
 By default calls `nprint' on BODY.
 Additional keyword arguments are allowed as NUI N-args."))
@@ -114,11 +115,11 @@ Additional keyword arguments are allowed as NUI N-args."))
       (:nxref :n-package package symbol)))
   (:documentation "Format the SYMBOL as HTML to substitute instead of its `nprint'-ed version."))
 
-(defgeneric ncode-display (form &rest n-args &key n-package &allow-other-keys)
+(defgeneric ncode-display (form &rest n-args &key package &allow-other-keys)
   (:method ((form string) &rest n-args &key &allow-other-keys)
     (declare (ignore n-args))
     form)
-  (:method ((form list) &rest n-args &key (n-package *package*) &allow-other-keys)
+  (:method ((form list) &rest n-args &key (package *package*) &allow-other-keys)
     (declare (ignore n-args))
     (resolve form)
     (flet ((sort-by-printed-length (collection)
@@ -143,7 +144,7 @@ Additional keyword arguments are allowed as NUI N-args."))
                         (funcall
                          frob (ncode-format-symbol
                                (find match list :key #'nprint :test #'string=)
-                               n-package)))))))
+                               package)))))))
         ;; NOTE: Order matters: classes < vars < macros < functions in
         ;; quantity. Subjectively.
         (frob-from-list *types*)
@@ -161,13 +162,13 @@ Uses `ncode-format-symbol' for the actual symbol HTML.
 Additional keyword arguments are allowed as NUI N-args."))
 
 (defgeneric ncode-inline-p (body &rest n-args &key n-package &allow-other-keys)
-  (:method ((body list) &rest n-args &key (n-package *package*) &allow-other-keys)
+  (:method ((body list) &rest n-args &key (package *package*) &allow-other-keys)
     (declare (ignorable n-args))
     (and (serapeum:single body)
          (zerop (count #\newline
                        (if (stringp (first body))
                            (first body)
-                           (nprint (first body) n-package))))))
+                           (nprint (first body) package))))))
   (:documentation "Decide on whether to print the BODY as inline <code> tag, or as a <pre> listing.
 Default method uses `nprint' on body and searches for newlines.
 Additional keyword arguments are allowed as NUI N-args."))
