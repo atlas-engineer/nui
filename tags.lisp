@@ -1,6 +1,8 @@
 (in-package :spinneret)
 
 ;; TODO: Accessibility and ARIA roles.
+;; FIXME: Somehow allow :nsection.class#id syntax? Spinneret docs are
+;; quite unclear about that.
 
 (defun collect-n-args (maybe-n-args)
   (loop for (key value) on maybe-n-args by #'cddr
