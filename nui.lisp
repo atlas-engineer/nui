@@ -5,7 +5,11 @@
 
 (defgeneric nprint (object &optional package)
   (:documentation "Print OBJECT (to string) aesthetically for NUI tags.
-PACKAGE should be a valid package designator in which to print OBJECT."))
+PACKAGE should be a valid package designator in which to print OBJECT.
+Could be as simple as:
+\(defmethod nui:nprint ((object t) &optional package)
+  (let ((*package* package))
+    (princ-to-string object)))"))
 
 (defgeneric nattrs (tag &rest n-args &key &allow-other-keys)
   (:method ((tag t) &rest n-args &key &allow-other-keys)
