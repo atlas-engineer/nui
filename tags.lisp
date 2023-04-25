@@ -90,7 +90,7 @@ Example for the case BODY compiles to Parenscript:
 
 (deftag :nbutton (body attrs &rest keys &key (text (alexandria:required-argument 'text))
                        &allow-other-keys)
-  "A button with TEXT text and BODY action.
+  "A <button> with TEXT text and BODY action.
 
 BODY can consist of quoted lists or forms producing them. produced
 forms will be compiled (via `nui:nbutton-onclick').
@@ -150,7 +150,7 @@ N-args (when present) may be useful to pass additional data to
 ;;; Lisp-enriched tags.
 
 (deftag :nxref (body attrs &rest keys &key (n-package *package*) &allow-other-keys)
-  "Create a link to the documentation of BODY symbol.
+  "Create an <a> link to the documentation of BODY symbol.
 
 N-args (when present) may be useful to pass additional data to
 `nui:nxref-link', `nui:nxref-doc', and `nui:nxref-display'.
@@ -242,7 +242,7 @@ N-args (when present) may be useful to pass additional data to
              ,@body)))))))
 
 (deftag :ntoc (body attrs &rest keys &key (title "Table of contents") (depth 3) &allow-other-keys)
-  "Generate table of contents for BODY up to DEPTH.
+  "Generate <nav> table of contents for BODY up to DEPTH.
 Looks for section tags with ID-s to link to.
 :nsection sections are perfectly suitable for that."
   (let ((attrs attrs))
