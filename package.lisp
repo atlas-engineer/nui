@@ -4,7 +4,8 @@
 (uiop:define-package :nui
   (:use :common-lisp)
   (:export
-   #:nprint
+   ;; General utils.
+   #:nprint #:nattrs
    ;; Preprocessed tag generics.
    #:nstyle-body #:nscript-body
    ;; Interactive tag generics.
@@ -68,4 +69,5 @@ Optional methods (defaults are intuitive and useful enough):
   - `nsection-id'.
   - `nsection-header'.
 - `:ntoc'
-  - `ntoc-body'."))
+  - `ntoc-body'.
+- `nattrs' to generate the attributes for a certain NUI tag."))

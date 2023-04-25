@@ -7,6 +7,17 @@
   (:documentation "Print OBJECT (to string) aesthetically for NUI tags.
 PACKAGE should be a valid package designator in which to print OBJECT."))
 
+(defgeneric nattrs (tag &rest n-args &key &allow-other-keys)
+  (:method ((tag t) &rest n-args &key &allow-other-keys)
+    (declare (ignore n-args))
+    '())
+  (:documentation "Compute attributes for TAG (name of the NUI-provided tag).
+Useful to pass additional attributes to the tag. For instance, adding
+:target \"_blank\" to :nxref:
+
+\(defmethod nui:nattrs ((tag (eql :nxref)) &rest n-args &key &allow-other-keys)
+  (list :target \"blank\"))"))
+
 (defgeneric nstyle-body (body &rest n-args &key &allow-other-keys)
   (:method ((body list) &rest n-args &key &allow-other-keys)
     (declare (ignore n-args))

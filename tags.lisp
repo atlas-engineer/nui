@@ -28,7 +28,10 @@ N-args (when present) may be useful to pass additional data to
   (let ((attrs attrs))
     (declare (ignore attrs))
     (with-n-args (n-args non-n-args) keys
-      `(:style.nstyle ,@non-n-args (:raw (nui:nstyle-body (list ,@body) ,@n-args))))))
+      `(:style.nstyle
+        ,@non-n-args
+        :attrs (nui:nattrs :nstyle ,@n-args)
+        (:raw (nui:nstyle-body (list ,@body) ,@n-args))))))
 
 (deftag :nscript (body attrs &rest keys &key &allow-other-keys)
   "Regular <script>, but with BODY preprocessed by `nui:nscript-body'.
@@ -38,7 +41,10 @@ N-args (when present) may be useful to pass additional data to
   (let ((attrs attrs))
     (declare (ignore attrs))
     (with-n-args (n-args non-n-args) keys
-      `(:script.nscript ,@non-n-args (:raw (nui:nscript-body (list ,@body) ,@n-args))))))
+      `(:script.nscript
+        ,@non-n-args
+        :attrs (nui:nattrs :nscript ,@n-args)
+        (:raw (nui:nscript-body (list ,@body) ,@n-args))))))
 
 ;;; Interactive tags.
 
@@ -82,6 +88,7 @@ Example for the case BODY compiles to Parenscript:
                                  `(list ,@body))))
              (:select.nselect
               ,@not-n-args
+              :attrs (nui:nattrs :nselect ,@n-args)
               :id ,id
               :onchange (nui:nselect-onchange ,id ,body-var ,@n-args)
               ,@(when default
@@ -108,8 +115,9 @@ Example for the case BODY compiles to Parenscript:
     (declare (ignorable attrs))
     (with-n-args (n-args not-n-args) keys
       `(:button.nbutton
-        :onclick (nui:nbutton-onclick (list ,@body) ,@n-args)
         ,@not-n-args
+        :attrs (nui:nattrs :nbutton ,@n-args)
+        :onclick (nui:nbutton-onclick (list ,@body) ,@n-args)
         ,text))))
 
 (deftag :ninput (body attrs &rest keys &key rows cols onfocus onchange &allow-other-keys)
@@ -132,6 +140,8 @@ N-args (when present) may be useful to pass additional data to
         ;; prepare for it, just in case someone goes stateful.
         `(let ((,input (progn ,@body)))
            (:textarea.ninput
+            ,@not-n-args
+            :attrs (nui:nattrs :ninput ,@n-args)
             :rows (or ,rows (1+ (count #\Newline ,input)) 1)
             :cols (or ,cols
                       (ignore-errors
@@ -142,7 +152,6 @@ N-args (when present) may be useful to pass additional data to
                 `(:onfocus (nui:ninput-onfocus ,onfocus ,@n-args)))
             ,@(when onchange
                 `(:onkeydown (nui:ninput-onchange ,onchange ,@n-args)))
-            ,@not-n-args
             ;; Maybe add ninput-body? Should be unnecessary,
             ;; though---ninput works with mere strings.
             (:raw (the string ,input))))))))
@@ -163,6 +172,7 @@ symbol in."
     (with-n-args (n-args not-n-args) keys
       `(:a.nxref
         ,@not-n-args
+        :attrs (nui:nattrs :nxref ,@n-args)
         :href (nui:nxref-link ,(first body) ,@n-args)
         :title (nui:nxref-doc ,(first body) ,@n-args)
         (:code
@@ -192,8 +202,14 @@ automatically based on `nui:nprint'-ed BODY size."
                                     `(nui:ncode-inline-p ,body-var ,@n-args)))
                   (,htmlized-var (nui:ncode-body ,body-var ,@n-args)))
              (if ,inline-var
-                 (:span.ncode ,@non-n-args (:raw ,htmlized-var))
-                 (:pre.ncode ,@non-n-args (:raw ,htmlized-var)))))))))
+                 (:span.ncode
+                  ,@non-n-args
+                  :attrs (nui:nattrs :ncode ,@n-args)
+                  (:raw ,htmlized-var))
+               (:pre.ncode
+                ,@non-n-args
+                :attrs (nui:nattrs :ncode ,@n-args)
+                (:raw ,htmlized-var)))))))))
 
 ;;; Structural tags.
 
@@ -222,7 +238,7 @@ N-args (when present) may be useful to pass additional data to
   (let ((attrs attrs))
     (declare (ignore attrs))
     (with-gensyms (id-var)
-      (with-n-args (n-args) keys
+      (with-n-args (n-args non-n-args) keys
         `(let ((spinneret::*html-path*
                  ;; Push as many :section tags into the path, as necessary to imply
                  ;; LEVEL for the sections inside this one. A trick on Spinneret to
@@ -235,6 +251,8 @@ N-args (when present) may be useful to pass additional data to
                              :initial-element :section)))
                (,id-var ,id))
            (:section.nsection
+            ,@non-n-args
+            :attrs (nui:nattrs :nsection ,@n-args)
             :id ,id-var
             (:details
              :open ,open-p
@@ -252,7 +270,8 @@ Looks for section tags with ID-s to link to.
         `(let ((,body-var (with-html-string ,@body)))
            (:nav.toc#toc
             ,@non-n-args
+            :attrs (nui:nattrs :ntoc ,@n-args)
             (:nsection
-              :title ,title
-              (:raw (nui:ntoc-body ,depth ,body-var ,@n-args))))
+             :title ,title
+             (:raw (nui:ntoc-body ,depth ,body-var ,@n-args))))
            (:raw ,body-var))))))
