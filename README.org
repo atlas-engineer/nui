@@ -7,11 +7,12 @@ The tags that NUI provides are:
   - :nsection :: section, its heading with a link to itself, and a linkable ID.
   - :ntoc :: auto-generated Table of Contents for the provided HTML.
 - Lisp-specific tags:
+  - :nkey :: Emacs-like key rendering with CUA notation as a tooltip.
   - :ncode :: Lisp (or non-Lisp) code listing, enriched with symbol references and customizable actions.
   - :nxref :: reference to a symbol in a configurable documentation source.
 - Interactive tags:
   - :nbutton :: a button invoking the action you provide.
-  - :nselect :: ~<select>~ tag with Lisp actions bound to it.
+  - :nselect :: ~<select>~ tag with actions bound to it.
   - :ninput :: input area tracking every modification and focus.
     
 * Getting started

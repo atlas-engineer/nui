@@ -83,6 +83,45 @@ Additional keyword arguments are allowed as NUI N-args."))
 Should return a string suitable for HTML onchange attribute.
 Additional keyword arguments are allowed as NUI N-args."))
 
+(defgeneric nkey-title (key &rest n-args &key &allow-other-keys)
+  (:method ((key string) &rest n-args &key &allow-other-keys)
+    (declare (ignore n-args))
+    (let (control-p meta-p shift-p super-p hyper-p)
+      (loop
+        (cond
+          ((uiop:string-prefix-p "C-" key)
+           (setf control-p t
+                 key (subseq key 2)))
+          ((uiop:string-prefix-p "M-" key)
+           (setf meta-p t
+                 key (subseq key 2)))
+          ((uiop:string-prefix-p "s-" key)
+           (setf shift-p t
+                 key (subseq key 2)))
+          ((uiop:string-prefix-p "S-" key)
+           (setf super-p t
+                 key (subseq key 2)))
+          ((uiop:string-prefix-p "H-" key)
+           (setf hyper-p t
+                 key (subseq key 2)))
+          (t (return (format nil "~@[~*Win+~]~@[~*Ctrl+~]~@[~*Shift+~]~@[~*Alt+~]~@[~*Hyper+~]~a"
+                             super-p control-p shift-p meta-p hyper-p key)))))))
+  (:documentation "Generic function to specify on :nkey key.
+Should return a string suitable for HTML :title attribute.
+Default method parses Emacs-type keystring and produces CUA
+representation (with Win key mentioned).
+Additional keyword arguments are allowed as NUI N-args."))
+
+(defgeneric nkey-display (key &rest n-args &key &allow-other-keys)
+  (:method ((key string) &rest n-args &key &allow-other-keys)
+    (declare (ignore n-args))
+    key)
+  (:documentation "Generic function to specify on :nkey key.
+Should return a string suitable for code display.
+Default method parses returns the key unaltered.
+Additional keyword arguments are allowed as NUI N-args."))
+
+
 (defgeneric nxref-doc (body &rest n-args &key package &allow-other-keys)
   (:method ((body symbol) &rest n-args &key &allow-other-keys)
     (declare (ignore n-args))

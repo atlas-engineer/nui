@@ -158,6 +158,27 @@ N-args (when present) may be useful to pass additional data to
 
 ;;; Lisp-enriched tags.
 
+(deftag :nkey (body attrs &rest keys &key &allow-other-keys)
+  "Create a hoverable <code> rendering of a key.
+
+The BODY (a single string) is rendered with `nui:nkey-display', the
+tooltip is rendered as `nui:nkey-title' result. Default methods are
+rendering Emacs-style BODY to a more conventional representation of
+Control+Alt+key (mentioning Windows key too).
+
+N-args (when present) may be useful to pass additional data to
+`nui:nkey-display' and `nui:nkey-title'."
+  (let ((attrs attrs))
+    (declare (ignorable attrs))
+    (with-n-args (n-args not-n-args) keys
+      (alexandria:with-gensyms (key)
+        `(let ((,key ,(first body)))
+           (:code.nkey
+            ,@not-n-args
+            :attrs (nui:nattrs :nkey ,@n-args)
+            :title (nui:nkey-title ,key ,@n-args)
+            (nui:nkey-display ,key ,@n-args)))))))
+
 (deftag :nxref (body attrs &rest keys &key (n-package *package*) &allow-other-keys)
   "Create an <a> link to the documentation of BODY symbol.
 
