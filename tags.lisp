@@ -297,7 +297,7 @@ Looks for section tags with ID-s to link to.
     (with-n-args (n-args non-n-args) keys
       (with-gensyms (body-var)
         `(let ((,body-var (with-html-string ,@body)))
-           (:nav.toc#toc
+           (:nav.ntoc#toc
             ,@non-n-args
             :attrs (nui:nattrs :ntoc ,@n-args)
             (:nsection
