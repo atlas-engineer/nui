@@ -253,6 +253,9 @@ tag to intelligently guess the current heading level.
 OPEN-P mandates whether the section is collapsed or not. True (= not
 collapsed) by default.
 
+As an additional convenience, all the literal strings encountered in
+the BODY of :nsection are converted to standalone paragraphs.
+
 N-args (when present) may be useful to pass additional data to
 `nui:nsection-header'."
   (check-type level (or null (integer 2 6)))
@@ -278,6 +281,11 @@ N-args (when present) may be useful to pass additional data to
             (:details
              :open ,open-p
              (:summary (:raw (nui:nsection-header ,title ,id-var ,@n-args)))
+             ,@(loop for form in body
+                     if (stringp form)
+                       collect `(:p ,form)
+                     else
+                       collect form)
              ,@body)))))))
 
 (deftag :ntoc (body attrs &rest keys &key (title "Table of contents") (depth 3) &allow-other-keys)
