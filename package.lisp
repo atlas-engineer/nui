@@ -13,6 +13,7 @@
    #:nbutton-onclick
    #:ninput-onfocus #:ninput-onchange
    ;; Lisp-enriched tag generics.
+   #:nkey-title #:nkey-display
    #:nxref-doc #:nxref-link #:nxref-display
    #:ncode-format-symbol #:ncode-display #:ncode-inline-p #:ncode-body
    ;; Structural tag generics.
