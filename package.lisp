@@ -19,6 +19,7 @@
    ;; Structural tag generics.
    #:nsection-id #:nsection-header
    #:ntoc-body
+   #:ntable-caption #:ntable-header #:ntable-row
    ;; Code walker variables:
    #:*specials* #:*variables* #:*functions* #:*macros* #:*classes*)
   (:documentation "NUI provides a set of Spinneret tags for documentation and text-based websites.

@@ -301,3 +301,34 @@ Additional keyword arguments are allowed as NUI N-args."))
   (:documentation "Generate the HTML for the :ntoc based on string BODY.
 Default method parses the BODY into nested <ul> with relative links.
 Additional keyword arguments are allowed as NUI N-args."))
+
+(defgeneric ntable-caption (caption &rest n-args &key &allow-other-keys)
+  (:method (caption &rest n-args &key &allow-other-keys)
+    (declare (ignore n-args))
+    (spinneret::escape-string (nprint caption)))
+  (:documentation "Generate contents of an :ntable <caption> of CAPTION.
+Default method `nprint's the CAPTION.
+Should escape the result, as it's injected into HTML verbatim.
+Additional keyword arguments are allowed as NUI N-args."))
+
+(defgeneric ntable-header (header &rest n-args &key &allow-other-keys)
+  (:method (header &rest n-args &key &allow-other-keys)
+    (declare (ignore n-args))
+    (spinneret::escape-string (nprint header)))
+  (:documentation "Generate contents of an :ntable <th> out of HEADER.
+Default method `nprint's the HEADER.
+Should escape the result, as it's injected into HTML verbatim.
+Additional keyword arguments are allowed as NUI N-args."))
+
+(defgeneric ntable-row (row &rest n-args &key &allow-other-keys)
+  (:method ((row string) &rest n-args &key &allow-other-keys)
+    (apply #'ntable-row (list row) n-args))
+  (:method ((row list) &rest n-args &key &allow-other-keys)
+    (declare (ignore n-args))
+    (spinneret:with-html-string
+      (dolist (form row)
+        (:td (spinneret::escape-string (nprint form))))))
+  (:documentation "Generate all the <td>s belonging to the :ntable row.
+Default method `nprint's every form in ROW into a standalone <td>.
+Should escape the result, as it's injected into HTML verbatim.
+Additional keyword arguments are allowed as NUI N-args."))
