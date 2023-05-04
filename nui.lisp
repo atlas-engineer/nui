@@ -124,7 +124,6 @@ Should return a string suitable for code display.
 Default method parses returns the key unaltered.
 Additional keyword arguments are allowed as NUI N-args."))
 
-
 (defgeneric nxref-doc (body &rest n-args &key package &allow-other-keys)
   (:method ((body symbol) &rest n-args &key &allow-other-keys)
     (declare (ignore n-args))
