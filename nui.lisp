@@ -74,14 +74,16 @@ By default calls `nselect-option' on every form in CLAUSES."))
 Should return a string suitable for HTML onchange attribute.
 Additional keyword arguments are allowed as NUI N-args."))
 
-(defgeneric ninput-onfocus (clauses &rest n-args &key &allow-other-keys)
+(defgeneric ninput-onfocus (form &rest n-args &key &allow-other-keys)
   (:documentation "Generic function to specify on focus of :ninput.
-Should return a string suitable for HTML onfocus attribute.
+Should return a string suitable for HTML onfocus attribute, possibly
+processing Lisp FORM.
 Additional keyword arguments are allowed as NUI N-args."))
 
-(defgeneric ninput-onchange (clauses &rest n-args &key &allow-other-keys)
+(defgeneric ninput-onchange (form &rest n-args &key &allow-other-keys)
   (:documentation "Generic function to specify on input to :ninput.
-Should return a string suitable for HTML onchange attribute.
+Should return a string suitable for HTML onchange attribute, possibly
+processing Lisp FORM.
 Additional keyword arguments are allowed as NUI N-args."))
 
 (defgeneric nkey-title (key &rest n-args &key &allow-other-keys)
