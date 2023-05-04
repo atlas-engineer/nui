@@ -305,7 +305,7 @@ Looks for section tags with ID-s to link to.
              (:raw (nui:ntoc-body ,depth ,body-var ,@n-args))))
            (:raw ,body-var))))))
 
-(deftag :ntable (body attrs &rest keys &key caption header &allow-other-keys)
+(deftag :ntable (body attrs &rest keys &key caption head &allow-other-keys)
   "Generate a <table> out of BODY.
 
 Every form in BODY should produce a list of table elements which to be
@@ -313,7 +313,7 @@ put into a row. Every form is processed with `nui:ntable-row'.
 
 When CAPTION is provided, set it as <caption> of the table (processing
 with with `nui:ntable-caption').
-When HEADER is provided, set its contents as a header row, processing
+When HEAD is provided, set its contents as a header row, processing
 every header with `nui:ntable-header'.
 
 N-args (when present) may be useful to pass additional data to
@@ -321,7 +321,7 @@ N-args (when present) may be useful to pass additional data to
   (let ((attrs attrs))
     (declare (ignorable attrs))
     (with-n-args (n-args non-n-args) keys
-      (remf non-n-args :header)
+      (remf non-n-args :head)
       (remf non-n-args :caption)
       (with-gensyms (header-var)
         `(:table.ntable
@@ -329,9 +329,11 @@ N-args (when present) may be useful to pass additional data to
           :attrs (nui:nattrs :ntoc ,@n-args)
           ,@(when caption
               `((:caption (:raw (nui:ntable-caption ,caption ,@n-args)))))
-          ,@(when header
-              `((:tr
-                 (dolist (,header-var ,header)
-                   (:th (:raw (nui:ntable-header ,header-var ,@n-args)))))))
-          ,@(loop for form in body
-                  collect `(:tr (:raw (nui:ntable-row ,form ,@n-args)))))))))
+          ,@(when head
+              `((:thead
+                 (:tr
+                  (dolist (,header-var ,head)
+                    (:th (:raw (nui:ntable-header ,header-var ,@n-args))))))))
+          (:tbody
+           ,@(loop for form in body
+                   collect `(:tr (:raw (nui:ntable-row ,form ,@n-args))))))))))
