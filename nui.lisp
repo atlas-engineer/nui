@@ -49,6 +49,7 @@ Additional keyword arguments are allowed as NUI N-args."))
           (uiop:ensure-list (first clause))
         (:option
          :title title
+         :value (nprint value)
          (or display (nprint value))))))
   (:documentation "Generic function to specify for every option in :nselect.
 Should return an HTML string for an <option> matching CLAUSE.
