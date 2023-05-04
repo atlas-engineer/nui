@@ -62,7 +62,7 @@ TITLE (see `:nselect' docstring for the format of CLAUSE)."))
   (:method ((id t) (clauses list) &rest n-args &key &allow-other-keys)
     (spinneret:with-html-string
       (dolist (clause clauses)
-        (apply #'nselect-option id clause n-args))))
+        (:raw (apply #'nselect-option id clause n-args)))))
   (:documentation "Generic function to specify for :nselect.
 Should return a set of <option>s as HTML string based on CLAUSES.
 Additional keyword arguments are allowed as NUI N-args.
