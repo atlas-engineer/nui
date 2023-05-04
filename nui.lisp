@@ -104,8 +104,8 @@ Additional keyword arguments are allowed as NUI N-args."))
           ((uiop:string-prefix-p "H-" key)
            (setf hyper-p t
                  key (subseq key 2)))
-          (t (return (format nil "~@[~*Win+~]~@[~*Ctrl+~]~@[~*Shift+~]~@[~*Alt+~]~@[~*Hyper+~]~a"
-                             super-p control-p shift-p meta-p hyper-p key)))))))
+          (t (return (format nil "~@[~*Hyper+~]~@[~*Win+~]~@[~*Ctrl+~]~@[~*Shift+~]~@[~*Alt+~]~a"
+                             hyper-p super-p control-p shift-p meta-p key)))))))
   (:documentation "Generic function to specify on :nkey key.
 Should return a string suitable for HTML :title attribute.
 Default method parses Emacs-type keystring and produces CUA
