@@ -5,6 +5,8 @@
   :description "Describe nui here"
   :author "Atlas Engineer LLC"
   :homepage "https://github.com/atlas-engineer/nui"
+  :bug-tracker "https://github.com/atlas-engineer/nui/issues"
+  :source-control (:git "https://github.com/atlas-engineer/nui.git")
   :license  "BSD-3 Clause"
   :version "0.0.0"
   :depends-on ("spinneret" "serapeum" "plump" "clss")
