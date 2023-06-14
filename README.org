@@ -1,5 +1,8 @@
 #+TITLE:NUI
 
+*NUI is abandoned due to being overly complicated and hard to integrate into Nyxt*
+
+
 NUI is a set of Spinneret tags useful in documentation, blog posts, and other text-centric HTML interfaces. It originates from Nyxt, where it's used in the manual and help system.
 
 The tags that NUI provides are:
